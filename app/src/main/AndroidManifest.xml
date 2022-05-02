@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wave">
         <activity
+            android:name=".BudgetActivity"
+            android:exported="true" />
+        <activity
             android:name=".GooglePaymentActivity"
             android:exported="true" />
         <activity

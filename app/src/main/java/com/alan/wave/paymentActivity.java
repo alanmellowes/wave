@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class paymentActivity extends AppCompatActivity {
+public class    paymentActivity extends AppCompatActivity {
     View paymentCardView, savingsCardView, cryptoCardView, settingsCardView;
 
     @Override
