@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "906975504803",
+    "project_id": "wave-ccbfd",
+    "storage_bucket": "wave-ccbfd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:906975504803:android:0e95f9efd3d6cc31da5216",
+        "android_client_info": {
+          "package_name": "com.alan.wave"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "906975504803-8ckkj1vicj4ar468b1uiabr17ao9g7ir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCmfgafZUjsFMyvofwUijbJ-ihkucXZ36A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "906975504803-8ckkj1vicj4ar468b1uiabr17ao9g7ir.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

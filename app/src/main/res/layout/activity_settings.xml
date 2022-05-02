@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".settingsActivity"
+    android:orientation="vertical"
+    android:background="@drawable/login"
+    android:weightSum="10">
+
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="421dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:layout_marginTop="8dp"
+        android:text="Hello"
+        android:textAlignment="center"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/usersemail"
+        android:layout_width="421dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:textAlignment="center"
+        android:textColor="@color/gray"
+        android:text="TextView"
+        android:textSize="40dp"
+        android:textStyle="bold"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginTop="-20dp"
+        android:layout_weight="0"
+        android:layout_marginBottom="0dp"
+        android:alignmentMode="alignMargins"
+        android:columnCount="2"
+        android:columnOrderPreserved="false"
+        android:padding="14dp"
+        android:rowCount="2">
+
+        <!--First row -->
+        <!--First column -->
+
+        <!--Second row -->
+        <!--First column -->
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/hikeFeature"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_row="0"
+            android:layout_rowWeight="1"
+            android:layout_column="0"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="100dp"
+            android:onClick="OnClick"
+            app:cardBackgroundColor="@color/gray"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="128dp"
+                    android:layout_height="240dp"
+                    android:src="@drawable/login"
+                    android:text="Payments"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/stepFeature"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="100dp"
+            android:onClick="OnClick"
+            app:cardBackgroundColor="@color/gray"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="128dp"
+                    android:layout_height="240dp"
+                    android:src="@drawable/homespage"
+                    android:text="Steps"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </GridLayout>
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="307dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#AF0808"
+        android:onClick="logout"
+        android:text="Logout"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+
+</LinearLayout>
