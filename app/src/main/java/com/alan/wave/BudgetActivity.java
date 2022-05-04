@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.joda.time.DateTime;
 import org.joda.time.Months;
 import org.joda.time.MutableDateTime;
+import org.joda.time.Weeks;
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
@@ -84,7 +85,7 @@ public class BudgetActivity extends AppCompatActivity {
                     Data data = snap.getValue(Data.class);
                     totalAmount += data.getAmount();
 
-                    String sTotal = String.valueOf("Month budget: EUR "+ totalAmount);
+                    String sTotal = String.valueOf("Month budget: €"+ totalAmount);
                     totalBudgetAmount.setText(sTotal);
                 }
             }
@@ -145,9 +146,10 @@ public class BudgetActivity extends AppCompatActivity {
                     MutableDateTime epoch = new MutableDateTime();
                     epoch.setDate(0);
                     DateTime now = new DateTime();
+                    Weeks weeks = Weeks.weeksBetween(epoch, now);
                     Months months = Months.monthsBetween(epoch, now);
 
-                    Data data = new Data(budgetItem, date, id, null, Integer.parseInt(budgetAmount), months.getMonths());
+                    Data data = new Data(budgetItem, date, id, null, Integer.parseInt(budgetAmount), months.getMonths(), weeks.getWeeks());
                     budgetRef.child(id).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -185,7 +187,7 @@ public class BudgetActivity extends AppCompatActivity {
         FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull MyViewHolder holder, int i, @NonNull Data model) {
-                holder.setItemAmount("Allocated amount: EUR "+model.getAmount());
+                holder.setItemAmount("Allocated amount: € "+model.getAmount());
                 holder.setDate("On: "+model.getDate());
                 holder.setItemName("BudgetItem: "+model.getItem());
 
@@ -274,9 +276,10 @@ public class BudgetActivity extends AppCompatActivity {
                 MutableDateTime epoch = new MutableDateTime();
                 epoch.setDate(0);
                 DateTime now = new DateTime();
+                Weeks weeks = Weeks.weeksBetween(epoch, now);
                 Months months = Months.monthsBetween(epoch, now);
 
-                Data data = new Data(item, date, post_key, null, amount, months.getMonths());
+                Data data = new Data(item, date, post_key, null, amount, months.getMonths(), weeks.getWeeks());
                 budgetRef.child(post_key).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

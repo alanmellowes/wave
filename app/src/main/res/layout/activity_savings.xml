@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Core Features"
+            android:text="Savings"
             android:textColor="@color/black"
             android:textSize="34sp" />
     </RelativeLayout>
@@ -72,7 +72,7 @@
         <!--Second row -->
         <!--First column -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/savingsFeature"
+            android:id="@+id/todaysActivity"
             android:onClick="OnClick"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -107,7 +107,7 @@
         <!--Second row -->
         <!--First column -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/cryptoFeature"
+            android:id="@+id/weekActivity"
             android:onClick="OnClick"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -142,7 +142,7 @@
         <!--Second row -->
         <!--Second column -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/settingsFeature"
+            android:id="@+id/monthActivity"
             android:onClick="OnClick"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -172,6 +172,80 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+        <!--Third row -->
+        <!--First column -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/analytics"
+            android:onClick="OnClick"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="@color/gray">
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:text = "Payments"
+                    android:textAlignment="center"
+                    android:textColor = "@color/black"
+                    android:textSize = "18sp"
+                    android:textStyle = "bold"
+                    android:src="@drawable/trend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!--Third row -->
+        <!--Second column -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/blankActivity"
+            android:onClick="OnClick"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_columnWeight="1"
+            android:layout_rowWeight="1"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            app:cardElevation="8dp"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="@color/gray">
+
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:text = "Payments"
+                    android:textAlignment="center"
+                    android:textColor = "@color/black"
+                    android:textSize = "18sp"
+                    android:textStyle = "bold"
+                    android:src="@drawable/setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
         </androidx.cardview.widget.CardView>
     </GridLayout>
 

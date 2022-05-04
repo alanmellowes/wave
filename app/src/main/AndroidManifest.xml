@@ -12,6 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wave">
         <activity
+            android:name=".ChooseAnalyticActivity"
+            android:exported="true" />
+        <activity
+            android:name=".WeekSpendingActivity"
+            android:exported="true" />
+        <activity
+            android:name=".MoneySpentTodayActivity"
+            android:exported="true" />
+        <activity
             android:name=".BudgetActivity"
             android:exported="true" />
         <activity
