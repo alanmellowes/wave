@@ -112,7 +112,11 @@ public class TodayItemsAdapter extends RecyclerView.Adapter<TodayItemsAdapter.Vi
                 Weeks weeks = Weeks.weeksBetween(epoch, now);
                 Months months = Months.monthsBetween(epoch, now);
 
-                Data data = new Data(item, date, post_key, note, amount, months.getMonths(), weeks.getWeeks());
+                String itemNday = item+date;
+                String itemNweek = item+weeks.getWeeks();
+                String itemNmonth = item+months.getMonths();
+
+                Data data = new Data(item, date, post_key, itemNday, itemNweek, itemNmonth, amount, months.getMonths(), weeks.getWeeks(), note);
 
                 String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
                 DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child(FirebaseAuth.getInstance().getCurrentUser().getUid());

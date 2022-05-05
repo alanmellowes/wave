@@ -43,12 +43,12 @@ public class    paymentActivity extends AppCompatActivity {
             }
         });
 
-        settingsCardView = findViewById(R.id.settingsFeature);
+        settingsCardView = findViewById(R.id.purchaseCardFeature);
 
         settingsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(paymentActivity.this, settingsActivity.class));
+                startActivity(new Intent(paymentActivity.this, cardActivity.class));
             }
         });
     }

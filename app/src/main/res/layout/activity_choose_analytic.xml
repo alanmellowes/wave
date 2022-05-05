@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ChooseAnalyticActivity"
-    android:background="#808080">
+    android:background="@drawable/register">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -30,7 +30,7 @@
         android:layout_marginTop="10dp"
         app:cardElevation="8dp"
         app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="@color/gray">
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:layout_gravity="center_vertical|center_horizontal"
@@ -40,7 +40,7 @@
 
             <ImageView
                 android:text = "Payments"
-                android:src="@drawable/operation"
+                android:src="@drawable/today"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -58,7 +58,7 @@
         android:layout_marginTop="10dp"
         app:cardElevation="8dp"
         app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="@color/gray">
+        app:cardBackgroundColor="@color/white">
 
         <LinearLayout
             android:layout_gravity="center_vertical|center_horizontal"
@@ -67,8 +67,8 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:text = "Payments"
-                android:src="@drawable/operation"
+                android:text = "Week"
+                android:src="@drawable/week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -95,8 +95,8 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:text = "Payments"
-                android:src="@drawable/operation"
+                android:text = "Month"
+                android:src="@drawable/month"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
