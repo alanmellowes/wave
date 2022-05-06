@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MoneySpentTodayActivity">
+    tools:context=".MoneySpentTodayActivity"
+    android:background="@drawable/login">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#000"
+            android:background="@color/blue"
             android:id="@+id/toolbar"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
@@ -49,9 +50,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|end"
+                android:src="@drawable/plus"
                 app:fabSize="normal"
                 android:id="@+id/fab"
-                android:backgroundTint="@color/black"
+                android:backgroundTint="@color/gray"
                 android:layout_margin="16dp"/>
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
     </LinearLayout>

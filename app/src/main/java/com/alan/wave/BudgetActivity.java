@@ -90,7 +90,7 @@ public class BudgetActivity extends AppCompatActivity {
                         Data data = snap.getValue(Data.class);
                         totalAmount += data.getAmount();
 
-                        String sTotal = String.valueOf("Month budget: €" + totalAmount);
+                        String sTotal = String.valueOf("Savings vault: €" + totalAmount);
                         totalBudgetAmount.setText(sTotal);
                     }
 

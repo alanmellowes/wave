@@ -14,16 +14,18 @@
         android:id="@+id/RLCurrency">
 
         <TextView
+            android:id="@+id/TVSymbol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/TVSymbol"
-            android:layout_margin="2dp"
-            android:padding="3dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:layout_marginBottom="2dp"
             android:layout_toLeftOf="@+id/TVCurrencyRate"
+            android:padding="3dp"
             android:text="Symbol"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            />
+            android:textStyle="bold" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

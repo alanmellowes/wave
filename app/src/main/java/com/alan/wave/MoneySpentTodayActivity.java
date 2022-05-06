@@ -130,7 +130,7 @@ public class MoneySpentTodayActivity extends AppCompatActivity {
                     int pTotal = Integer.parseInt(String.valueOf(total));
                     totalAmount += pTotal;
 
-                    totalAmountSpentOn.setText("Total day's spending: $"+totalAmount);
+                    totalAmountSpentOn.setText("Total day's spending: €"+totalAmount);
                 }
             }
 

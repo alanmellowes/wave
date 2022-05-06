@@ -77,7 +77,7 @@
                 <ImageView
                     android:layout_width="128dp"
                     android:layout_height="240dp"
-                    android:src="@drawable/login"
+                    android:src="@drawable/maps"
                     android:text="Payments"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -111,7 +111,7 @@
                 <ImageView
                     android:layout_width="128dp"
                     android:layout_height="240dp"
-                    android:src="@drawable/homespage"
+                    android:src="@drawable/health"
                     android:text="Steps"
                     android:textAlignment="center"
                     android:textColor="@color/black"

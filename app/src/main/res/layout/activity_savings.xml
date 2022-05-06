@@ -14,11 +14,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
-         <TextView
+        <TextView
             android:id="@+id/textGrid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
             android:text="Savings"
             android:textColor="@color/black"
             android:textSize="34sp" />
@@ -59,12 +60,12 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:text = "Payments"
+                    android:text = "Vault"
                     android:textAlignment="center"
                     android:textColor = "@color/black"
                     android:textSize = "18sp"
                     android:textStyle = "bold"
-                    android:src="@drawable/operation"
+                    android:src="@drawable/savings_vault"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -94,12 +95,12 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:text = "Payments"
+                    android:text = "today spend"
                     android:textAlignment="center"
                     android:textColor = "@color/black"
                     android:textSize = "18sp"
                     android:textStyle = "bold"
-                    android:src="@drawable/savingspiggy"
+                    android:src="@drawable/today_spending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -129,12 +130,12 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:text = "Payments"
+                    android:text = "week spend"
                     android:textAlignment="center"
                     android:textColor = "@color/black"
                     android:textSize = "18sp"
                     android:textStyle = "bold"
-                    android:src="@drawable/trend"
+                    android:src="@drawable/week_spend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -164,12 +165,12 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:text = "Payments"
+                    android:text = "month spend"
                     android:textAlignment="center"
                     android:textColor = "@color/black"
                     android:textSize = "18sp"
                     android:textStyle = "bold"
-                    android:src="@drawable/setting"
+                    android:src="@drawable/month_spend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -201,12 +202,12 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:text = "Payments"
+                    android:text = "analytics"
                     android:textAlignment="center"
                     android:textColor = "@color/black"
                     android:textSize = "18sp"
                     android:textStyle = "bold"
-                    android:src="@drawable/trend"
+                    android:src="@drawable/analytics"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -236,14 +237,14 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:text = "Payments"
+                    android:layout_width="117dp"
+                    android:layout_height="160dp"
+                    android:src="@drawable/homespage"
+                    android:text="home"
                     android:textAlignment="center"
-                    android:textColor = "@color/black"
-                    android:textSize = "18sp"
-                    android:textStyle = "bold"
-                    android:src="@drawable/setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
 

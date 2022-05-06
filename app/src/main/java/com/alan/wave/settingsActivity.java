@@ -39,7 +39,7 @@ public class settingsActivity extends AppCompatActivity {
         mapsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(settingsActivity.this, MainActivity.class));
+                startActivity(new Intent(settingsActivity.this, MapActivity.class));
             }
         });
         //when user clicks steps on card view
@@ -48,7 +48,7 @@ public class settingsActivity extends AppCompatActivity {
         homeCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(settingsActivity.this, featuresActivity.class));
+                startActivity(new Intent(settingsActivity.this, StepActivity.class));
             }
         });
     }

@@ -335,8 +335,8 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
                     }
-                    totalBudgetAmountTextView.setText("Total day's spending: $ "+totalAmount);
-                    monthSpendAmount.setText("Total Spent: $ "+totalAmount);
+                    totalBudgetAmountTextView.setText("Total day's spending: € "+totalAmount);
+                    monthSpendAmount.setText("Total Spent: € "+totalAmount);
                 }else {
                     totalBudgetAmountTextView.setText("No money spent today");
                     anyChartView.setVisibility(View.GONE);
