@@ -41,27 +41,25 @@ import java.util.PrimitiveIterator;
 
 public class DailyAnalyticsActivity extends AppCompatActivity {
 
-    private Toolbar SettingsToolbar;
+    private Toolbar settingsToolbar;
 
     private FirebaseAuth mAuth;
     private String onlineUserId = "";
     private DatabaseReference expensesRef, personalRef;
 
-    private TextView totalBudgetAmountTextView, analyticsPersonalAmount, analyticsTransportAmount, analyticsEntertainmentAmount, analyticsOtherAmount ,analyticsFoodAmount;
+    private TextView totalBudgetAmountTextView, analyticsTransportAmount, analyticsFoodAmount, analyticsPersonalAmount, analyticsEntertainmentAmount, analyticsOtherAmount, monthSpentAmount;
 
-    private RelativeLayout relativeLayoutPersonal, relativeLayoutTransport, relativeLayoutEntertainment, relativeLayoutOther, relativeLayoutFood, linearLayoutAnalysis;
+    private RelativeLayout linearLayoutFood, linearLayoutTransport, linearLayoutFoodHouse, linearLayoutEntertainment, linearLayoutOther, linearLayoutAnalysis;
 
     private AnyChartView anyChartView;
-    private TextView progress_ratio_personal, progress_ratio_transport, progress_ratio_entertainment, progress_ratio_other, progress_ratio_food, monthSpendAmount, monthRatioSpending;
-    private ImageView status_image_personal, status_image_transport, status_image_entertainment, status_image_other, status_image_food, monthRatioSpending_Image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daily_analytics);
 
-        SettingsToolbar = findViewById(R.id.SettingsToolbar);
-        setSupportActionBar(SettingsToolbar);
+        settingsToolbar = findViewById(R.id.my_Feed_Toolbar);
+        setSupportActionBar(settingsToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Today Analytics");
@@ -74,52 +72,39 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
         totalBudgetAmountTextView = findViewById(R.id.totalBudgetAmountTextView);
 
-        //analytics
+        //general
+        monthSpentAmount = findViewById(R.id.monthSpendAmount);
         linearLayoutAnalysis = findViewById(R.id.linearLayoutAnalysis);
-        monthSpendAmount = findViewById(R.id.monthSpendAmount);
-        monthRatioSpending = findViewById(R.id.monthRatioSpending);
-        monthRatioSpending_Image = findViewById(R.id.monthRatioSpending_Image);
 
-        relativeLayoutPersonal = findViewById(R.id.relativeLayoutPersonal);
-        relativeLayoutTransport = findViewById(R.id.relativeLayoutTransport);
-        relativeLayoutEntertainment = findViewById(R.id.relativeLayoutEntertainment);
-        relativeLayoutOther = findViewById(R.id.relativeLayoutOther);
-        relativeLayoutFood = findViewById(R.id.relativeLayoutFood);
-
-
-        //text views
-        totalBudgetAmountTextView = findViewById(R.id.totalBudgetAmountTextView);
-        analyticsPersonalAmount = findViewById(R.id.analyticsPersonalAmount);
+        //analytics views
         analyticsTransportAmount = findViewById(R.id.analyticsTransportAmount);
+        analyticsFoodAmount = findViewById(R.id.analyticsFoodAmount);
+        analyticsPersonalAmount = findViewById(R.id.analyticsTransportAmount);
         analyticsEntertainmentAmount = findViewById(R.id.analyticsEntertainmentAmount);
         analyticsOtherAmount = findViewById(R.id.analyticsOtherAmount);
-        analyticsFoodAmount = findViewById(R.id.analyticsFoodAmount);
 
-        progress_ratio_personal = findViewById(R.id.progress_ratio_personal);
-        progress_ratio_transport = findViewById(R.id.progress_ratio_transport);
-        progress_ratio_entertainment = findViewById(R.id.progress_ratio_entertainment);
-        progress_ratio_other = findViewById(R.id.progress_ratio_other);
-        progress_ratio_food = findViewById(R.id.progress_ratio_food);
 
-        //image views
-        status_image_personal = findViewById(R.id.status_image_personal);
-        status_image_transport = findViewById(R.id.status_image_transport);
-        status_image_entertainment = findViewById(R.id.status_image_entertainment);
-        status_image_other = findViewById(R.id.status_image_other);
-        status_image_food = findViewById(R.id.status_image_food);
+        //recycler views
+        linearLayoutTransport = findViewById(R.id.linearLayoutTransport);
+        linearLayoutFood = findViewById(R.id.linearLayoutFood);
+        linearLayoutFoodHouse = findViewById(R.id.linearLayoutFoodHouse);
+        linearLayoutEntertainment = findViewById(R.id.linearLayoutEntertainment);
+        linearLayoutOther = findViewById(R.id.linearLayoutOther);
 
         anyChartView = findViewById(R.id.anyChartView);
 
-        getTotalWeekPersonalExpenses();
+
         getTotalWeekTransportExpenses();
-        getTotalWeekEntertainmentExpenses();
         getTotalWeekFoodExpenses();
+        getTotalWeekPersonal();
+        getTotalWeekEntertainmentExpenses();
         getTotalWeekOtherExpenses();
         getTotalDaySpending();
 
+        loadGraph();
     }
 
-    private void getTotalWeekPersonalExpenses(){
+    private void getTotalWeekTransportExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0);
         DateTime now = new DateTime();
@@ -127,66 +112,27 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
-        String itemNday = "Personal"+date;
+        String itemNday = "Transport" + date;
 
         String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
-        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child(onlineUserId);
+        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child("mYetIoEY7hMEDhw15jt0epLsP0Z2");
 
         Query query = reference.orderByChild("itemNday").equalTo(itemNday);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     int totalAmount = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsPersonalAmount.setText("Spent "+totalAmount);
-                    }
-                    personalRef.child("dayPers").setValue(totalAmount);
-                }else{
-                    relativeLayoutPersonal.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getTotalWeekTransportExpenses(){
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0);
-        DateTime now = new DateTime();
-
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Calendar cal = Calendar.getInstance();
-        String date = dateFormat.format(cal.getTime());
-        String itemNday = "Transport"+date;
-
-        String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
-        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child(onlineUserId);
-
-        Query query = reference.orderByChild("itemNday").equalTo(itemNday);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    int totalAmount = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>)ds.getValue();
-                        Object total = map.get("amount");
-                        int pTotal = Integer.parseInt(String.valueOf(total));
-                        totalAmount += pTotal;
-                        analyticsTransportAmount.setText("Spent "+totalAmount);
+                        analyticsTransportAmount.setText("Spent " + totalAmount);
                     }
                     personalRef.child("dayTrans").setValue(totalAmount);
-                }else{
-                    relativeLayoutTransport.setVisibility(View.GONE);
+                } else {
+                    linearLayoutTransport.setVisibility(View.GONE);
                 }
             }
 
@@ -197,7 +143,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalWeekEntertainmentExpenses(){
+    private void getTotalWeekFoodExpenses() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0);
         DateTime now = new DateTime();
@@ -205,66 +151,27 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
-        String itemNday = "Entertainment"+date;
+        String itemNday = "Food" + date;
 
         String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
-        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child(onlineUserId);
+        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child("mYetIoEY7hMEDhw15jt0epLsP0Z2");
 
         Query query = reference.orderByChild("itemNday").equalTo(itemNday);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     int totalAmount = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsEntertainmentAmount.setText("Spent "+totalAmount);
-                    }
-                    personalRef.child("dayEnt").setValue(totalAmount);
-                }else{
-                    relativeLayoutEntertainment.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void getTotalWeekFoodExpenses(){
-        MutableDateTime epoch = new MutableDateTime();
-        epoch.setDate(0);
-        DateTime now = new DateTime();
-
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-        Calendar cal = Calendar.getInstance();
-        String date = dateFormat.format(cal.getTime());
-        String itemNday = "Food"+date;
-
-        String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
-        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child(onlineUserId);
-
-        Query query = reference.orderByChild("itemNday").equalTo(itemNday);
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    int totalAmount = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>)ds.getValue();
-                        Object total = map.get("amount");
-                        int pTotal = Integer.parseInt(String.valueOf(total));
-                        totalAmount += pTotal;
-                        analyticsFoodAmount.setText("Spent "+totalAmount);
+                        analyticsFoodAmount.setText("Spent " + totalAmount);
                     }
                     personalRef.child("dayFood").setValue(totalAmount);
-                }else{
-                    relativeLayoutFood.setVisibility(View.GONE);
+                } else {
+                    linearLayoutFood.setVisibility(View.GONE);
                 }
             }
 
@@ -275,8 +182,7 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-
-    private void getTotalWeekOtherExpenses(){
+    private void getTotalWeekPersonal() {
         MutableDateTime epoch = new MutableDateTime();
         epoch.setDate(0);
         DateTime now = new DateTime();
@@ -284,27 +190,27 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
-        String itemNday = "Other"+date;
+        String itemNday = "House Expenses" + date;
 
         String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
-        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child(onlineUserId);
+        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child("mYetIoEY7hMEDhw15jt0epLsP0Z2");
 
         Query query = reference.orderByChild("itemNday").equalTo(itemNday);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
+                if (snapshot.exists()) {
                     int totalAmount = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
-                        analyticsOtherAmount.setText("Spent "+totalAmount);
+                        analyticsPersonalAmount.setText("Spent " + totalAmount);
                     }
-                    personalRef.child("dayOther").setValue(totalAmount);
-                }else{
-                    relativeLayoutOther.setVisibility(View.GONE);
+                    personalRef.child("dayHouse").setValue(totalAmount);
+                } else {
+                    linearLayoutFoodHouse.setVisibility(View.GONE);
                 }
             }
 
@@ -315,29 +221,108 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
         });
     }
 
-    private void getTotalDaySpending(){
+    private void getTotalWeekEntertainmentExpenses() {
+        MutableDateTime epoch = new MutableDateTime();
+        epoch.setDate(0);
+        DateTime now = new DateTime();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime());
+        String itemNday = "Entertainment" + date;
+
+        String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
+        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child("mYetIoEY7hMEDhw15jt0epLsP0Z2");
+
+        Query query = reference.orderByChild("itemNday").equalTo(itemNday);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int totalAmount = 0;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                        Object total = map.get("amount");
+                        int pTotal = Integer.parseInt(String.valueOf(total));
+                        totalAmount += pTotal;
+                        analyticsEntertainmentAmount.setText("Spent " + totalAmount);
+                    }
+                    personalRef.child("dayEnt").setValue(totalAmount);
+                } else {
+                    linearLayoutEntertainment.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+
+    private void getTotalWeekOtherExpenses() {
+        MutableDateTime epoch = new MutableDateTime();
+        epoch.setDate(0);
+        DateTime now = new DateTime();
+
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar cal = Calendar.getInstance();
+        String date = dateFormat.format(cal.getTime());
+        String itemNday = "Other" + date;
+
+        String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
+        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child("mYetIoEY7hMEDhw15jt0epLsP0Z2");
+
+        Query query = reference.orderByChild("itemNday").equalTo(itemNday);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    int totalAmount = 0;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
+                        Object total = map.get("amount");
+                        int pTotal = Integer.parseInt(String.valueOf(total));
+                        totalAmount += pTotal;
+                        analyticsOtherAmount.setText("Spent " + totalAmount);
+                    }
+                    personalRef.child("dayOther").setValue(totalAmount);
+                } else {
+                    linearLayoutOther.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void getTotalDaySpending() {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         Calendar cal = Calendar.getInstance();
         String date = dateFormat.format(cal.getTime());
 
         String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
-        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child(onlineUserId);
+        DatabaseReference reference = FirebaseDatabase.getInstance(strURL).getReference("expenses").child("mYetIoEY7hMEDhw15jt0epLsP0Z2");
 
         Query query = reference.orderByChild("date").equalTo(date);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0) {
+                if (dataSnapshot.exists() && dataSnapshot.getChildrenCount() > 0) {
                     int totalAmount = 0;
                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Map<String, Object> map = (Map<String, Object>)ds.getValue();
+                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
                         Object total = map.get("amount");
                         int pTotal = Integer.parseInt(String.valueOf(total));
                         totalAmount += pTotal;
                     }
-                    totalBudgetAmountTextView.setText("Total day's spending: € "+totalAmount);
-                    monthSpendAmount.setText("Total Spent: € "+totalAmount);
-                }else {
+                    totalBudgetAmountTextView.setText("Total day's spending: € " + totalAmount);
+                    monthSpentAmount.setText("Total Spent: € " + totalAmount);
+                } else {
                     totalBudgetAmountTextView.setText("No money spent today");
                     anyChartView.setVisibility(View.GONE);
                 }
@@ -352,11 +337,39 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
 
 
     //load graph
-    private void loadGraph(){
+    private void loadGraph() {
         personalRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()) {
+                if (snapshot.exists()) {
+
+                    int traTotal;
+                    if (snapshot.hasChild("dayTrans")) {
+                        traTotal = Integer.parseInt(snapshot.child("dayTrans").getValue().toString());
+                    } else {
+                        traTotal = 0;
+                    }
+
+                    int foodTotal;
+                    if (snapshot.hasChild("dayFood")) {
+                        foodTotal = Integer.parseInt(snapshot.child("dayFood").getValue().toString());
+                    } else {
+                        foodTotal = 0;
+                    }
+
+                    int entTotal;
+                    if (snapshot.hasChild("dayEnt")) {
+                        entTotal = Integer.parseInt(snapshot.child("dayEnt").getValue().toString());
+                    } else {
+                        entTotal = 0;
+                    }
+
+                    int otherTotal;
+                    if (snapshot.hasChild("dayOther")) {
+                        otherTotal = Integer.parseInt(snapshot.child("dayOther").getValue().toString());
+                    } else {
+                        otherTotal = 0;
+                    }
 
                     int persTotal;
                     if (snapshot.hasChild("dayPers")) {
@@ -365,41 +378,13 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                         persTotal = 0;
                     }
 
-                    int transTotal;
-                    if (snapshot.hasChild("dayTrans")) {
-                        transTotal = Integer.parseInt(snapshot.child("dayTrans").getValue().toString());
-                    } else {
-                        transTotal = 0;
-                    }
-
-                    int EnterTotal;
-                    if (snapshot.hasChild("dayEnter")) {
-                        EnterTotal = Integer.parseInt(snapshot.child("dayEnter").getValue().toString());
-                    } else {
-                        EnterTotal = 0;
-                    }
-
-                    int FoodTotal;
-                    if (snapshot.hasChild("dayFood")) {
-                        FoodTotal = Integer.parseInt(snapshot.child("dayFood").getValue().toString());
-                    } else {
-                        FoodTotal = 0;
-                    }
-
-                    int OtherTotal;
-                    if (snapshot.hasChild("dayOther")) {
-                        OtherTotal = Integer.parseInt(snapshot.child("dayOther").getValue().toString());
-                    } else {
-                        OtherTotal = 0;
-                    }
 
                     Pie pie = AnyChart.pie();
                     List<DataEntry> data = new ArrayList<>();
-                    data.add(new ValueDataEntry("Personal", persTotal));
-                    data.add(new ValueDataEntry("Transport", transTotal));
-                    data.add(new ValueDataEntry("Entertainment", EnterTotal));
-                    data.add(new ValueDataEntry("Food", FoodTotal));
-                    data.add(new ValueDataEntry("Other", OtherTotal));
+                    data.add(new ValueDataEntry("Transport", traTotal));
+                    data.add(new ValueDataEntry("Food", foodTotal));
+                    data.add(new ValueDataEntry("Entertainment", entTotal));
+                    data.add(new ValueDataEntry("Other", otherTotal));
 
                     pie.data(data);
 
@@ -418,183 +403,8 @@ public class DailyAnalyticsActivity extends AppCompatActivity {
                             .align(Align.CENTER);
 
                     anyChartView.setChart(pie);
-                }
-                    else{
-                    Toast.makeText(DailyAnalyticsActivity.this, "Child does not exist", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
-    private void setStatusAndImageResource(){
-        personalRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    float persTotal;
-                    if (snapshot.hasChild("dayPers")) {
-                        persTotal = Integer.parseInt(snapshot.child("dayPers").getValue().toString());
-                    } else {
-                        persTotal = 0;
-                    }
-
-                    float transTotal;
-                    if (snapshot.hasChild("dayTrans")) {
-                        transTotal = Integer.parseInt(snapshot.child("dayTrans").getValue().toString());
-                    } else {
-                        transTotal = 0;
-                    }
-
-                    float EnterTotal;
-                    if (snapshot.hasChild("dayEnter")) {
-                        EnterTotal = Integer.parseInt(snapshot.child("dayEnter").getValue().toString());
-                    } else {
-                        EnterTotal = 0;
-                    }
-
-                    float FoodTotal;
-                    if (snapshot.hasChild("dayFood")) {
-                        FoodTotal = Integer.parseInt(snapshot.child("dayFood").getValue().toString());
-                    } else {
-                        FoodTotal = 0;
-                    }
-
-                    float OtherTotal;
-                    if (snapshot.hasChild("dayOther")) {
-                        OtherTotal = Integer.parseInt(snapshot.child("dayOther").getValue().toString());
-                    } else {
-                        OtherTotal = 0;
-                    }
-
-                    float monthTotalSpentAmount;
-                    if (snapshot.hasChild("today")) {
-                        monthTotalSpentAmount = Integer.parseInt(snapshot.child("today").getValue().toString());
-                    } else {
-                        monthTotalSpentAmount = 0;
-                    }
-
-                    //get ratios
-                    float persRatio;
-                    if (snapshot.hasChild("dayPersRatio")) {
-                        persRatio = Integer.parseInt(snapshot.child("dayPersRatio").getValue().toString());
-                    } else {
-                        persRatio = 0;
-                    }
-
-                    float transRatio;
-                    if (snapshot.hasChild("dayTransRatio")) {
-                        transRatio = Integer.parseInt(snapshot.child("dayTransRatio").getValue().toString());
-                    } else {
-                        transRatio = 0;
-                    }
-
-                    float enterRatio;
-                    if (snapshot.hasChild("dayEnterRatio")) {
-                        enterRatio = Integer.parseInt(snapshot.child("dayEnterRatio").getValue().toString());
-                    } else {
-                        enterRatio = 0;
-                    }
-
-                    float foodRatio;
-                    if (snapshot.hasChild("dayFoodRatio")) {
-                        foodRatio = Integer.parseInt(snapshot.child("dayFoodRatio").getValue().toString());
-                    } else {
-                        foodRatio = 0;
-                    }
-
-                    float otherRatio;
-                    if (snapshot.hasChild("dayOtherRatio")) {
-                        otherRatio = Integer.parseInt(snapshot.child("dayOtherRatio").getValue().toString());
-                    } else {
-                        otherRatio = 0;
-                    }
-
-                    float monthTotalSpentAmountRatio;
-                    if (snapshot.hasChild("dailyBudget")) {
-                        monthTotalSpentAmountRatio = Integer.parseInt(snapshot.child("dailyBudget").getValue().toString());
-                    } else {
-                        monthTotalSpentAmountRatio = 0;
-                    }
-
-
-                    float monthPercent = (monthTotalSpentAmount / monthTotalSpentAmountRatio) * 100;
-                    if (monthPercent < 50) {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
-                        monthRatioSpending_Image.setImageResource(R.drawable.green);
-                    } else if (monthPercent >= 50 && monthPercent < 100) {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
-                        monthRatioSpending_Image.setImageResource(R.drawable.brown);
-                    } else {
-                        monthRatioSpending.setText(monthPercent + " %" + " used of " + monthTotalSpentAmountRatio + ". Status:");
-                        monthRatioSpending_Image.setImageResource(R.drawable.red);
-                    }
-
-                    float personalPercent = (persTotal / persRatio) * 100;
-                    if (personalPercent < 50) {
-                        progress_ratio_personal.setText(personalPercent + " %" + " used of " + persRatio + ". Status:");
-                        status_image_personal.setImageResource(R.drawable.green);
-                    } else if (personalPercent >= 50 && personalPercent < 100) {
-                        progress_ratio_personal.setText(personalPercent + " %" + " used of " + persRatio + ". Status:");
-                        status_image_personal.setImageResource(R.drawable.brown);
-                    } else {
-                        progress_ratio_personal.setText(personalPercent + " %" + " used of " + persRatio + ". Status:");
-                        status_image_personal.setImageResource(R.drawable.red);
-                    }
-
-                    float transportPercent = (transTotal / transRatio) * 100;
-                    if (transportPercent < 50) {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + transRatio + ". Status:");
-                        status_image_transport.setImageResource(R.drawable.green);
-                    } else if (transportPercent >= 50 && transportPercent < 100) {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + transRatio + ". Status:");
-                        status_image_transport.setImageResource(R.drawable.brown);
-                    } else {
-                        progress_ratio_transport.setText(transportPercent + " %" + " used of " + transRatio + ". Status:");
-                        status_image_transport.setImageResource(R.drawable.red);
-                    }
-
-                    float entertainmentPercent = (EnterTotal / enterRatio) * 100;
-                    if (entertainmentPercent < 50) {
-                        progress_ratio_entertainment.setText(entertainmentPercent + " %" + " used of " + enterRatio + ". Status:");
-                        status_image_entertainment.setImageResource(R.drawable.green);
-                    } else if (entertainmentPercent >= 50 && entertainmentPercent < 100) {
-                        progress_ratio_entertainment.setText(entertainmentPercent + " %" + " used of " + enterRatio + ". Status:");
-                        status_image_entertainment.setImageResource(R.drawable.brown);
-                    } else {
-                        progress_ratio_entertainment.setText(entertainmentPercent + " %" + " used of " + enterRatio + ". Status:");
-                        status_image_entertainment.setImageResource(R.drawable.red);
-                    }
-
-                    float foodPercent = (FoodTotal / foodRatio) * 100;
-                    if (foodPercent < 50) {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
-                        status_image_food.setImageResource(R.drawable.green);
-                    } else if (foodPercent >= 50 && foodPercent < 100) {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
-                        status_image_food.setImageResource(R.drawable.brown);
-                    } else {
-                        progress_ratio_food.setText(foodPercent + " %" + " used of " + foodRatio + ". Status:");
-                        status_image_food.setImageResource(R.drawable.red);
-                    }
-
-                    float otherPercent = (OtherTotal / otherRatio) * 100;
-                    if (otherPercent < 50) {
-                        progress_ratio_other.setText(otherPercent + " %" + " used of " + otherRatio + ". Status:");
-                        status_image_other.setImageResource(R.drawable.green);
-                    } else if (otherPercent >= 50 && otherPercent < 100) {
-                        progress_ratio_other.setText(otherPercent + " %" + " used of " + otherRatio + ". Status:");
-                        status_image_other.setImageResource(R.drawable.brown);
-                    } else {
-                        progress_ratio_other.setText(otherPercent + " %" + " used of " + otherRatio + ". Status:");
-                        status_image_other.setImageResource(R.drawable.red);
-                    }
                 } else {
-                    Toast.makeText(DailyAnalyticsActivity.this, "setStatusAndImageResource Errors", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DailyAnalyticsActivity.this, "Child does not exist", Toast.LENGTH_SHORT).show();
                 }
             }
 

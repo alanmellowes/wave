@@ -6,37 +6,35 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 public class savingsActivity extends AppCompatActivity {
-    View paymentCardView, savingsCardView, cryptoCardView, settingsCardView, analyticsCardView;
+    View vaultCardView, todayCardView, weekCardView, montyhCardView, analyticsCardView, homeCardView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_savings);
 
-        paymentCardView = findViewById(R.id.budget);
+        vaultCardView = findViewById(R.id.budget);
 
-        paymentCardView.setOnClickListener(new View.OnClickListener() {
+        vaultCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(savingsActivity.this, BudgetActivity.class));
+                startActivity(new Intent(savingsActivity.this, VaultActivity.class));
             }
         });
         //when user clicks savings on card view
-        savingsCardView = findViewById(R.id.todaysActivity);
+        todayCardView = findViewById(R.id.todaysActivity);
 
-        savingsCardView.setOnClickListener(new View.OnClickListener() {
+        todayCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(savingsActivity.this, MoneySpentTodayActivity.class));
             }
         });
 
-        cryptoCardView = findViewById(R.id.weekActivity);
+        weekCardView = findViewById(R.id.weekActivity);
 
-        cryptoCardView.setOnClickListener(new View.OnClickListener() {
+        weekCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(savingsActivity.this, WeekSpendingActivity.class);
@@ -45,9 +43,9 @@ public class savingsActivity extends AppCompatActivity {
             }
         });
 
-        settingsCardView = findViewById(R.id.monthActivity);
+        montyhCardView = findViewById(R.id.monthActivity);
 
-        settingsCardView.setOnClickListener(new View.OnClickListener() {
+        montyhCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(savingsActivity.this, WeekSpendingActivity.class);
@@ -62,19 +60,19 @@ public class savingsActivity extends AppCompatActivity {
         analyticsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(savingsActivity.this, ChooseAnalyticActivity.class));
+                startActivity(new Intent(savingsActivity.this, DailyAnalyticsActivity.class));
             }
         });
 
-        //when user clicks savings on card view
-        //savingsCardView = findViewById(R.id.todaysActivity);
 
-        //savingsCardView.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-            //public void onClick(View view) {
-              //  startActivity(new Intent(savingsActivity.this, MoneySpentTodayActivity.class));
-            //}
-        //});
+        homeCardView = findViewById(R.id.homeActivity);
+
+        homeCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(savingsActivity.this, featuresActivity.class));
+            }
+        });
     }
 
 }

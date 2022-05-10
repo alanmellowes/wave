@@ -15,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,14 +36,13 @@ import org.joda.time.DateTime;
 import org.joda.time.Months;
 import org.joda.time.MutableDateTime;
 import org.joda.time.Weeks;
-import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
 
-public class BudgetActivity extends AppCompatActivity {
+public class VaultActivity extends AppCompatActivity {
 
     private TextView totalBudgetAmount;
     private RecyclerView recyclerView;
@@ -63,7 +60,7 @@ public class BudgetActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_budget);
+        setContentView(R.layout.activity_vault);
 
         mAuth = FirebaseAuth.getInstance();
         String strURL = "https://wave-ccbfd-default-rtdb.europe-west1.firebasedatabase.app/";
@@ -121,11 +118,6 @@ public class BudgetActivity extends AppCompatActivity {
             }
         });
 
-        getMonthPersonalBudgetRatios();
-        getMonthTransportBudgetRatios();
-        getMonthEntertainmentBudgetRatios();
-        getMonthFoodBudgetRatios();
-        getMonthOtherBudgetRatios();
     }
 
     private void additem() {
@@ -153,7 +145,7 @@ public class BudgetActivity extends AppCompatActivity {
                     return;
                 }
                 if(budgetItem.equals("Select Items")){
-                    Toast.makeText(BudgetActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(VaultActivity.this, "Select a valid item", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     loader.setMessage("adding a budget item");
@@ -180,9 +172,9 @@ public class BudgetActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(BudgetActivity.this, "Budget item added successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(VaultActivity.this, "Budget item added successfully", Toast.LENGTH_SHORT).show();
                             }else {
-                                Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(VaultActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                             }
                             loader.dismiss();
                         }
@@ -314,9 +306,9 @@ public class BudgetActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(BudgetActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VaultActivity.this, "Updated successfully", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VaultActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -331,9 +323,9 @@ public class BudgetActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if(task.isSuccessful()){
-                            Toast.makeText(BudgetActivity.this, "Deleted successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VaultActivity.this, "Deleted successfully", Toast.LENGTH_SHORT).show();
                         }else {
-                            Toast.makeText(BudgetActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(VaultActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -342,175 +334,5 @@ public class BudgetActivity extends AppCompatActivity {
         });
 
         dialog.show();
-    }
-
-    private void getMonthPersonalBudgetRatios(){
-        Query query = budgetRef.orderByChild("item").equalTo("Personal");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                  int pTotal = 0;
-                  for(DataSnapshot ds : snapshot.getChildren()){
-                      Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                      Object total = map.get("amount");
-                      pTotal = Integer.parseInt(String.valueOf(total));
-                  }
-
-                  int dayPersRatio = pTotal/30;
-                  int weekPersRatio = pTotal/4;
-                  int monthPersRatio = pTotal;
-
-                  personalRef.child("dayPersRatio").setValue(dayPersRatio);
-                  personalRef.child("weekPersRatio").setValue(weekPersRatio);
-                  personalRef.child("monthPersRatio").setValue(monthPersRatio);
-                }else{
-                    personalRef.child("dayPersRatio").setValue(0);
-                    personalRef.child("weekPersRatio").setValue(0);
-                    personalRef.child("monthPersRatio").setValue(0);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-    private void getMonthTransportBudgetRatios(){
-        Query query = budgetRef.orderByChild("item").equalTo("Transport");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    int pTotal = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                        Object total = map.get("amount");
-                        pTotal = Integer.parseInt(String.valueOf(total));
-                    }
-
-                    int dayTransRatio = pTotal/30;
-                    int weekTransRatio = pTotal/4;
-                    int monthTransRatio = pTotal;
-
-                    personalRef.child("dayTransRatio").setValue(dayTransRatio);
-                    personalRef.child("weekTransRatio").setValue(weekTransRatio);
-                    personalRef.child("monthTransRatio").setValue(monthTransRatio);
-                }else{
-                    personalRef.child("dayTransRatio").setValue(0);
-                    personalRef.child("weekTransRatio").setValue(0);
-                    personalRef.child("monthTransRatio").setValue(0);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-    private void getMonthEntertainmentBudgetRatios(){
-
-        Query query = budgetRef.orderByChild("item").equalTo("Entertainment");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    int pTotal = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                        Object total = map.get("amount");
-                        pTotal = Integer.parseInt(String.valueOf(total));
-                    }
-
-                    int dayEnterRatio = pTotal/30;
-                    int weekEnterRatio = pTotal/4;
-                    int monthEnterRatio = pTotal;
-
-                    personalRef.child("dayEnterRatio").setValue(dayEnterRatio);
-                    personalRef.child("weekEnterRatio").setValue(weekEnterRatio);
-                    personalRef.child("monthEnterRatio").setValue(monthEnterRatio);
-                }else{
-                    personalRef.child("dayEnterRatio").setValue(0);
-                    personalRef.child("weekEnterRatio").setValue(0);
-                    personalRef.child("monthEnterRatio").setValue(0);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-    private void getMonthFoodBudgetRatios(){
-
-        Query query = budgetRef.orderByChild("item").equalTo("Food");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    int pTotal = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                        Object total = map.get("amount");
-                        pTotal = Integer.parseInt(String.valueOf(total));
-                    }
-
-                    int dayFoodRatio = pTotal/30;
-                    int weekFoodRatio = pTotal/4;
-                    int monthFoodRatio = pTotal;
-
-                    personalRef.child("dayFoodRatio").setValue(dayFoodRatio);
-                    personalRef.child("weekFoodRatio").setValue(weekFoodRatio);
-                    personalRef.child("monthFoodRatio").setValue(monthFoodRatio);
-                }else{
-                    personalRef.child("dayFoodRatio").setValue(0);
-                    personalRef.child("weekFoodRatio").setValue(0);
-                    personalRef.child("monthFoodRatio").setValue(0);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-    private void getMonthOtherBudgetRatios(){
-
-        Query query = budgetRef.orderByChild("item").equalTo("Other");
-        query.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    int pTotal = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()){
-                        Map<String, Object> map = (Map<String, Object>) ds.getValue();
-                        Object total = map.get("amount");
-                        pTotal = Integer.parseInt(String.valueOf(total));
-                    }
-
-                    int dayOtherRatio = pTotal/30;
-                    int weekOtherRatio = pTotal/4;
-                    int monthOtherRatio = pTotal;
-
-                    personalRef.child("dayOtherRatio").setValue(dayOtherRatio);
-                    personalRef.child("weekOtherRatio").setValue(weekOtherRatio);
-                    personalRef.child("monthOtherRatio").setValue(monthOtherRatio);
-                }else{
-                    personalRef.child("dayOtherRatio").setValue(0);
-                    personalRef.child("weekOtherRatio").setValue(0);
-                    personalRef.child("monthOtherRatio").setValue(0);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
     }
 }

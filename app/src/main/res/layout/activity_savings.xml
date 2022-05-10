@@ -216,7 +216,7 @@
         <!--Third row -->
         <!--Second column -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/blankActivity"
+            android:id="@+id/homeActivity"
             android:onClick="OnClick"
             android:layout_width="0dp"
             android:layout_height="0dp"

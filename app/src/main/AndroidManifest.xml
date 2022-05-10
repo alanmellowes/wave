@@ -24,19 +24,7 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MonthlyAnalyticsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".WeeklyAnalyticsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".DailyAnalyticsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ChooseAnalyticActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
@@ -48,7 +36,7 @@
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".BudgetActivity"
+            android:name=".VaultActivity"
             android:exported="true"
             android:screenOrientation="portrait" />
         <activity
