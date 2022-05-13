@@ -17,7 +17,7 @@
             android:name=".StepActivity"
             android:exported="true" />
         <activity
-            android:name=".MapActivity"
+            android:name=".PayPalActivity"
             android:exported="true" />
         <activity
             android:name=".cardActivity"

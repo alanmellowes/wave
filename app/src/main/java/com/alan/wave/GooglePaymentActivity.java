@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class GooglePaymentActivity extends AppCompatActivity {
 
-    public static final String GPAY_PACKAGE_NAME = "com.google.android.apps.walletnfcrel";
+    public static final String GPAY_PACKAGE_NAME = "com.google.android.apps.nbu.paisa.user";
     EditText name, upiId, amount, note;
     TextView msg;
     Button pay;

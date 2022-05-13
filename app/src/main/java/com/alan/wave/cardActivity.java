@@ -57,7 +57,7 @@ public class cardActivity extends AppCompatActivity {
             }
         });
 
-        //use volley library as sub for postman
+        //using volley library as sub for postman
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 "https://api.stripe.com/v1/customers",
                 new Response.Listener<String>() {

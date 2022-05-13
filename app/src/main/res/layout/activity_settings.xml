@@ -74,6 +74,14 @@
                 android:layout_margin="16dp"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nearest ATM"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="25sp"></TextView>
+
                 <ImageView
                     android:layout_width="128dp"
                     android:layout_height="240dp"
@@ -107,6 +115,14 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="16dp"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="    Heatlh"
+                    android:textAlignment="center"
+                    android:textStyle="bold"
+                    android:textSize="25sp"></TextView>
 
                 <ImageView
                     android:layout_width="128dp"

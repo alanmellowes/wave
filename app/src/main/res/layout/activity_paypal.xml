@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    tools:context=".PayPalActivity"
+    android:background="@drawable/login">
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Send money to a friend"
+        android:textSize="30dp"
+        android:textAlignment="center"
+
+        android:textStyle="bold" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_amount"
+        android:inputType="number"
+        android:hint="Enter Amount"
+        android:padding="12dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/edit_text_bg"
+        />
+
+
+    <EditText
+        android:id="@+id/et_recipient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/edit_text_bg"
+        android:hint="Enter recipient email address"
+        android:padding="12dp" />
+
+    <Button
+        android:id="@+id/bt_Pay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/blue"
+        android:layout_marginTop="30dp"
+        android:text="Send money" />
+
+
+</LinearLayout>

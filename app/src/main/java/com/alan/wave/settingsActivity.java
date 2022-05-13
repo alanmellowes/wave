@@ -3,7 +3,9 @@ package com.alan.wave;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -32,6 +34,9 @@ public class settingsActivity extends AppCompatActivity {
 
         useremail.setText(userID);      //prints users email to screen
 
+        String sSource = "My Location";
+        String sDestination = "ATM";
+
 
 
         mapsCardView = findViewById(R.id.hikeFeature);
@@ -39,7 +44,7 @@ public class settingsActivity extends AppCompatActivity {
         mapsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(settingsActivity.this, MapActivity.class));
+                DisplayTrack(sSource, sDestination);
             }
         });
         //when user clicks steps on card view
@@ -60,5 +65,24 @@ public class settingsActivity extends AppCompatActivity {
         FirebaseAuth.getInstance().signOut();
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
         finish();
+    }
+
+    private void DisplayTrack(String sSource, String sDestination) {
+        //if the users device doesn't have a map installed then redirect them to the play store
+        try {
+            Uri uri = Uri.parse("http://www.google.co.in/maps/dir/"+sSource+ "/"
+                    +sDestination);
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            intent.setPackage("com.google.android.apps.maps");
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }catch (ActivityNotFoundException e){
+            //when maps isn't installed
+            Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.maps");
+            Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 }
