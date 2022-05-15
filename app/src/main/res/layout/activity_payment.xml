@@ -72,7 +72,7 @@
         <!--Second row -->
         <!--First column -->
         <androidx.cardview.widget.CardView
-            android:id="@+id/savingsFeature"
+            android:id="@+id/homePageFeature"
             android:onClick="OnClick"
             android:layout_width="0dp"
             android:layout_height="0dp"

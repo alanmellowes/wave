@@ -67,7 +67,6 @@ public class cardActivity extends AppCompatActivity {
                             JSONObject object = new JSONObject(response);
                             customerID = object.getString("id");
 
-                            Toast.makeText(cardActivity.this, customerID, Toast.LENGTH_SHORT).show();
 
                             getEphericalKey(customerID);
                         } catch (JSONException e) {
@@ -112,7 +111,6 @@ public class cardActivity extends AppCompatActivity {
                             JSONObject object = new JSONObject(response);
                             EphericalKey = object.getString("id");
 
-                            Toast.makeText(cardActivity.this, EphericalKey, Toast.LENGTH_SHORT).show();
 
 
                             getClientSecret(customerID,EphericalKey);
@@ -159,7 +157,6 @@ public class cardActivity extends AppCompatActivity {
                             JSONObject object = new JSONObject(response);
                             ClientSecret = object.getString("client_secret");
 
-                            Toast.makeText(cardActivity.this, ClientSecret, Toast.LENGTH_SHORT).show();
 
 
 

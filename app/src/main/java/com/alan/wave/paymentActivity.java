@@ -23,13 +23,13 @@ public class    paymentActivity extends AppCompatActivity {
                 startActivity(new Intent(paymentActivity.this, GooglePaymentActivity.class));
             }
         });
-        //when user clicks savings on card view
-        savingsCardView = findViewById(R.id.savingsFeature);
+        //when user clicks home on card view
+        savingsCardView = findViewById(R.id.homePageFeature);
 
         savingsCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(paymentActivity.this, savingsActivity.class));
+                startActivity(new Intent(paymentActivity.this, featuresActivity.class));
             }
         });
 
